@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudMockApi.Admin", "CloudMockApi.Admin\CloudMockApi.Admin.csproj", "{2F64B091-F3C2-4B98-89C8-FE06D524DAEE}"
+EndProject
+Project("{CC5FD16D-436D-48AD-A40C-5A424C6E3E79}") = "CloudMockApiService", "CloudMockApiService\CloudMockApiService.ccproj", "{55ED8D7A-8BC7-47C3-ACD9-D4B3BFBA694A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudMockApi", "CloudMockApi\CloudMockApi.csproj", "{3A1AFCAA-EB41-4633-B8C4-FF3E368BC344}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2F64B091-F3C2-4B98-89C8-FE06D524DAEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F64B091-F3C2-4B98-89C8-FE06D524DAEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F64B091-F3C2-4B98-89C8-FE06D524DAEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F64B091-F3C2-4B98-89C8-FE06D524DAEE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{55ED8D7A-8BC7-47C3-ACD9-D4B3BFBA694A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55ED8D7A-8BC7-47C3-ACD9-D4B3BFBA694A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55ED8D7A-8BC7-47C3-ACD9-D4B3BFBA694A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55ED8D7A-8BC7-47C3-ACD9-D4B3BFBA694A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3A1AFCAA-EB41-4633-B8C4-FF3E368BC344}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A1AFCAA-EB41-4633-B8C4-FF3E368BC344}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A1AFCAA-EB41-4633-B8C4-FF3E368BC344}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A1AFCAA-EB41-4633-B8C4-FF3E368BC344}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
