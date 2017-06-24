@@ -1,8 +1,8 @@
-﻿using System.Data.Entity;
-using System.Security.Claims;
+﻿using System.Security.Claims;
 using System.Threading.Tasks;
+using ElCamino.AspNet.Identity.AzureTable;
+using ElCamino.AspNet.Identity.AzureTable.Model;
 using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace CloudMockApi.Admin.Models
 {
@@ -16,12 +16,14 @@ namespace CloudMockApi.Admin.Models
             // Add custom user claims here
             return userIdentity;
         }
+
+        public string Tenant { get; set; }
     }
 
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+    public class ApplicationDbContext : IdentityCloudContext
     {
         public ApplicationDbContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
+            : base()
         {
         }
 
