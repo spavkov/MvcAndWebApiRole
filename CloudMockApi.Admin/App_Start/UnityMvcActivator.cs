@@ -1,11 +1,12 @@
 using System.Linq;
 using System.Web.Mvc;
+using CloudMockApi.Admin.App_Start;
 using Microsoft.Practices.Unity.Mvc;
 
-[assembly: WebActivatorEx.PreApplicationStartMethod(typeof(CloudMockApi.Admin.App_Start.UnityWebActivator), "Start")]
-[assembly: WebActivatorEx.ApplicationShutdownMethod(typeof(CloudMockApi.Admin.App_Start.UnityWebActivator), "Shutdown")]
+/*[assembly: WebActivatorEx.PreApplicationStartMethod(typeof(CloudMockApi.Admin.App_Start.UnityWebActivator), "Start")]
+[assembly: WebActivatorEx.ApplicationShutdownMethod(typeof(CloudMockApi.Admin.App_Start.UnityWebActivator), "Shutdown")]*/
 
-namespace CloudMockApi.Admin.App_Start
+namespace CloudMockApi.Admin
 {
     /// <summary>Provides the bootstrapping for integrating Unity with ASP.NET MVC.</summary>
     public static class UnityWebActivator

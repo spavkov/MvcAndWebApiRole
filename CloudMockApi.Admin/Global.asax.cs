@@ -13,7 +13,7 @@ namespace CloudMockApi.Admin
     {
         protected void Application_Start()
         {
-            //UnityWebActivator.Start();
+            UnityWebActivator.Start();
 
             //ElCamino - Added to create azure tables
             ApplicationUserManager.StartupAsync();

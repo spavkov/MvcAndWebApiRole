@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using CloudMockApi.Admin.Models;
+using CloudMockApi.Services;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
@@ -12,6 +13,7 @@ namespace CloudMockApi.Admin.Controllers
     [Authorize]
     public class AccountController : Controller
     {
+        private readonly ITenantsRepository tenantsRepository;
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
@@ -19,8 +21,9 @@ namespace CloudMockApi.Admin.Controllers
         {
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, ITenantsRepository tenantsRepository )
         {
+            this.tenantsRepository = tenantsRepository;
             UserManager = userManager;
             SignInManager = signInManager;
         }
@@ -148,7 +151,7 @@ namespace CloudMockApi.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Tenant = model.Tenant};
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
