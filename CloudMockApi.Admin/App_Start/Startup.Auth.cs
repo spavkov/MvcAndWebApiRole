@@ -1,4 +1,5 @@
 ﻿using System;
+using CloudMockApi.Admin.App_Start;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
@@ -6,6 +7,8 @@ using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
 using Owin;
 using CloudMockApi.Admin.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.Practices.Unity;
 
 namespace CloudMockApi.Admin
 {
@@ -14,10 +17,32 @@ namespace CloudMockApi.Admin
         // For more information on configuring authentication, please visit http://go.microsoft.com/fwlink/?LinkId=301864
         public void ConfigureAuth(IAppBuilder app)
         {
+            var container = UnityConfig.GetConfiguredContainer();
+
+            container.RegisterInstance(app, new ContainerControlledLifetimeManager());
+            container.RegisterInstance(ApplicationDbContext.Create(), new ContainerControlledLifetimeManager());
+
+            // [Edit 2]
+            app.CreatePerOwinContext<ApplicationDbContext>((options, owinContext) => container.Resolve<ApplicationDbContext>());
+            app.CreatePerOwinContext<ApplicationUserManager>((options, owinContext) =>
+            {
+                var mgr = ApplicationUserManager.Create(options, owinContext);
+                container.RegisterInstance(mgr);
+                return mgr;
+            });
+            app.CreatePerOwinContext<ApplicationSignInManager>((options, context) =>
+            {
+                var mgr = ApplicationSignInManager.Create(options, context);
+                container.RegisterInstance(mgr);
+                return mgr;
+            });
+
+/*
             // Configure the db context, user manager and signin manager to use a single instance per request
             app.CreatePerOwinContext(ApplicationDbContext.Create);
             app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
             app.CreatePerOwinContext<ApplicationSignInManager>(ApplicationSignInManager.Create);
+*/
 
             // Enable the application to use a cookie to store information for the signed in user
             // and to use a cookie to temporarily store information about a user logging in with a third party login provider

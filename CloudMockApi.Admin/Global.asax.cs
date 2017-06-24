@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using CloudMockApi.Admin.App_Start;
 
 namespace CloudMockApi.Admin
 {
@@ -12,6 +13,7 @@ namespace CloudMockApi.Admin
     {
         protected void Application_Start()
         {
+            UnityWebActivator.Start();
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
