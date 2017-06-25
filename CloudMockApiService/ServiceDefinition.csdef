@@ -12,7 +12,7 @@
       <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
     </ConfigurationSettings>
     <Endpoints>
-      <InputEndpoint name="Endpoint1" protocol="http" port="80" />
+      <InputEndpoint name="Endpoint1" protocol="http" port="8080" />
     </Endpoints>
   </WebRole>
   <WebRole name="CloudMockApi" vmsize="Small">
@@ -27,7 +27,7 @@
       <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
     </ConfigurationSettings>
     <Endpoints>
-      <InputEndpoint name="Endpoint1" protocol="http" port="8080" />
+      <InputEndpoint name="Endpoint1" protocol="http" port="80" />
     </Endpoints>
   </WebRole>
 </ServiceDefinition>
