@@ -1,5 +1,7 @@
 using System;
-using CloudMockApi.Services;
+using CloudMockApi.Library.Configuration;
+using CloudMockApi.Library.Services.Configuration;
+using CloudMockApi.Library.Services.Storage;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.Configuration;
 
@@ -37,6 +39,8 @@ namespace CloudMockApi.Admin.App_Start
             // lazyContainer.LoadConfiguration();
 
             container.RegisterType<ITenantsRepository, TenantsRepository>();
+            container.RegisterType<ICloudMockApiStorageConfiguration, CloudMockApiStorageConfiguration>();
+            container.RegisterType<IConfigurationHelper, ConfigurationHelper>();
 
             // TODO: Register your types here
             // lazyContainer.RegisterType<IProductRepository, ProductRepository>();

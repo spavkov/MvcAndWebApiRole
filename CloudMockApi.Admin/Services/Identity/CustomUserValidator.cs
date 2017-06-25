@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Mail;
 using System.Threading.Tasks;
-using CloudMockApi.Admin.Models;
 using Microsoft.Ajax.Utilities;
 using Microsoft.AspNet.Identity;
+using samplemvc.Models;
 
-namespace CloudMockApi.Services.Identity
+namespace CloudMockApi.Admin.Services.Identity
 {
     public class CustomUserValidator : UserValidator<ApplicationUser>
     {

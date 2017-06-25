@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace CloudMockApi.Admin.Controllers
+namespace samplemvc.Controllers
 {
     public class HomeController : Controller
     {
