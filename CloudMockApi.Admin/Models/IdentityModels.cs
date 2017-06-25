@@ -1,11 +1,10 @@
 ﻿using System.Security.Claims;
 using System.Threading.Tasks;
+using ElCamino.AspNet.Identity.AzureTable;
+using ElCamino.AspNet.Identity.AzureTable.Model;
 using Microsoft.AspNet.Identity;
 
-using ElCamino.AspNet.Identity.DocumentDB;
-using ElCamino.AspNet.Identity.DocumentDB.Model;
-
-namespace samplemvc.Models
+namespace CloudMockApi.Models
 {
     // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit http://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
     public class ApplicationUser : IdentityUser
@@ -19,7 +18,7 @@ namespace samplemvc.Models
         }
     }
 
-    public class ApplicationDbContext : IdentityCloudContext<ApplicationUser>
+    public class ApplicationDbContext : IdentityCloudContext
     {
         public ApplicationDbContext()
             : base()

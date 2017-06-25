@@ -5,9 +5,9 @@ using Microsoft.Owin.Security.Cookies;
 using Owin;
 using System;
 using CloudMockApi.Admin.App_Start;
+using CloudMockApi.Admin.Models;
+using CloudMockApi.Models;
 using Microsoft.Practices.Unity;
-using samplemvc;
-using samplemvc.Models;
 using PerRequestLifetimeManager = Microsoft.Practices.Unity.PerRequestLifetimeManager;
 
 namespace CloudMockApi.Admin
@@ -25,6 +25,12 @@ namespace CloudMockApi.Admin
             app.CreatePerOwinContext<ApplicationUserManager>((options, owinContext) =>
             {
                 var mgr = ApplicationUserManager.Create(options, owinContext);
+                container.RegisterInstance(mgr, new PerRequestLifetimeManager());
+                return mgr;
+            });
+            app.CreatePerOwinContext<ApplicationSignInManager>((options, owinContext) =>
+            {
+                var mgr = ApplicationSignInManager.Create(options, owinContext);
                 container.RegisterInstance(mgr, new PerRequestLifetimeManager());
                 return mgr;
             });
