@@ -9,6 +9,8 @@ namespace CloudMockApi.Library.Configuration
         string DocumentDbEndpointUrl { get; }
         string DocumentDbDatabaseName { get; }
         string DocumentDbAuthKey { get; }
+
+        string DocumentDbTenantsCollectionName { get; }
     }
 
     public class CloudMockApiStorageConfiguration : ICloudMockApiStorageConfiguration
@@ -17,6 +19,7 @@ namespace CloudMockApi.Library.Configuration
         private Lazy<string> documentDbEndpointUrl;
         private Lazy<string> documentDbDatabaseName;
         private Lazy<string> documentDbAuthKey;
+        private Lazy<string> tenantsCollectionName;
 
         public CloudMockApiStorageConfiguration(IConfigurationHelper configurationHelper)
         {
@@ -24,6 +27,7 @@ namespace CloudMockApi.Library.Configuration
             documentDbEndpointUrl = new Lazy<string>(() => configurationHelper.GetApplicationSetting("CloudMockApi_Uri"));
             documentDbDatabaseName = new Lazy<string>(() => configurationHelper.GetApplicationSetting("CloudMockApi_Database"));
             documentDbAuthKey = new Lazy<string>(() => configurationHelper.GetApplicationSetting("CloudMockApi_AuthKey"));
+            tenantsCollectionName = new Lazy<string>(() => configurationHelper.GetApplicationSetting("CloudMockApi_DocumentDbTenantsCollectionName"));
         }
 
         public string DocumentDbEndpointUrl => documentDbEndpointUrl.Value;
@@ -31,6 +35,8 @@ namespace CloudMockApi.Library.Configuration
         public string DocumentDbDatabaseName => documentDbDatabaseName.Value;
 
         public string DocumentDbAuthKey => documentDbAuthKey.Value;
+
+        public string DocumentDbTenantsCollectionName => tenantsCollectionName.Value;
 
     }
 }
