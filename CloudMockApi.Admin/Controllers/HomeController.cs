@@ -1,6 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Web.Mvc;
+using System.Web.Routing;
 using System.Web.Security;
+using CloudMockApi.Admin.Models;
+using CloudMockApi.Library.Model.Storage;
 using CloudMockApi.Library.Services.Storage;
 
 namespace CloudMockApi.Admin.Controllers
@@ -15,11 +19,20 @@ namespace CloudMockApi.Admin.Controllers
             this.tenantsRepository = tenantsRepository;
         }
 
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
             ViewBag.StatusMessage = TempData["StatusMessage"] ?? string.Empty;
 
-            return View();
+            var email = User.Identity.Name;
+
+            var tenants = await tenantsRepository.GetUserTenants(email);
+
+            var model = new TenantsHomeViewModel()
+            {
+                Tenants = tenants
+            };
+
+            return View(model);
         }
 
         public ActionResult About()
@@ -34,6 +47,18 @@ namespace CloudMockApi.Admin.Controllers
             ViewBag.Message = "Your contact page.";
 
             return View();
+        }
+
+        public async Task<ActionResult> EditTenant(string tenantId)
+        {
+            return new RedirectToRouteResult(new RouteValueDictionary(
+              new { action = "Index", controller = "Home" }));
+        }
+
+        public async Task<ActionResult> DeleteTenant(string tenantId)
+        {
+            return new RedirectToRouteResult(new RouteValueDictionary(
+              new { action = "Index", controller = "Home" }));
         }
 
         [HttpPost]
