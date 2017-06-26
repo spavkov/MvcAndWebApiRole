@@ -8,6 +8,15 @@
                 @Html.DisplayFor(modelItem => item.RowKey)
             </td>
             <td>
+                &nbsp;
+            </td>
+            <td>
+                @($"{item.Timestamp:F}")
+            </td>
+            <td>
+                &nbsp;
+            </td>
+            <td>
                 @Html.ActionLink("Edit", "EditTenant", new { tenantId = item.RowKey }) |
                 @Html.ActionLink("Delete", "DeleteTenant", new { tenantId = item.RowKey }) |
             </td>
