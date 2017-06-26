@@ -1,6 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using Microsoft.WindowsAzure.Storage.Table;
-using Newtonsoft.Json;
 
 namespace CloudMockApi.Library.Model.Storage
 {
@@ -12,32 +11,10 @@ namespace CloudMockApi.Library.Model.Storage
 
         public Tenant(string tenantId, string email)
         {
-            this.TenantId = tenantId;
-            this.PartitionKey = tenantId;
-            this.RowKey = tenantId;
-            this.Email = email;
+            this.PartitionKey = GlobalConstants.TenantPartitionKey;
+            this.RowKey = tenantId?.ToLowerInvariant() ?? string.Empty;
+            this.Email = email?.ToLowerInvariant();
         }
-
-        public string TenantId { get; set; }
-
-        public string Email { get; set; }
-    }
-
-    public class UserTenant : TableEntity
-    {
-        public UserTenant()
-        {
-        }
-
-        public UserTenant(string tenantId, string email)
-        {
-            this.TenantId = tenantId;
-            this.PartitionKey = email;
-            this.RowKey = tenantId;
-            this.Email = email;
-        }
-
-        public string TenantId { get; set; }
 
         public string Email { get; set; }
     }

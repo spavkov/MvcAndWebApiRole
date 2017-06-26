@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using CloudMockApi.Library.Configuration;
 using CloudMockApi.Library.Model.Storage;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Table;
-using Newtonsoft.Json;
 
 namespace CloudMockApi.Library.Services.Storage
 {
@@ -16,7 +14,6 @@ namespace CloudMockApi.Library.Services.Storage
     {
         private readonly ICloudMockApiStorageConfiguration storageConfiguration;
         private readonly CloudTable tenantsTable;
-        private CloudTable userTenantsTable;
 
         public TenantsRepository(ICloudMockApiStorageConfiguration storageConfiguration)
         {
@@ -30,18 +27,37 @@ namespace CloudMockApi.Library.Services.Storage
 
             this.tenantsTable = tableClient.GetTableReference(this.storageConfiguration.TenantsTableName);
             tenantsTable.CreateIfNotExists();
-
-            this.userTenantsTable = tableClient.GetTableReference(this.storageConfiguration.UserTenantsTableName);
-            tenantsTable.CreateIfNotExists();
         }
 
         public async Task<List<Tenant>> GetUserTenants(string userEmail)
         {
-            var emailToLower = userEmail.ToLowerInvariant();
-            // Query across partition keys
-            var tenants = new List<Tenant>();
+            // Initialize a default TableQuery to retrieve all the entities in the table.
+            TableQuery<Tenant> rangeQuery = new TableQuery<Tenant>().Where(
+                TableQuery.CombineFilters(
+                    TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, GlobalConstants.TenantPartitionKey),
+                    TableOperators.And,
+                    TableQuery.GenerateFilterCondition("Email", QueryComparisons.Equal, userEmail.ToLowerInvariant())));
 
-            return tenants;
+            // Initialize the continuation token to null to start from the beginning of the table.
+            TableContinuationToken continuationToken = null;
+
+            var allTenants = new List<Tenant>();
+            do
+            {
+                // Retrieve a segment (up to 1,000 entities).
+                TableQuerySegment<Tenant> tableQueryResult =
+                    await this.tenantsTable.ExecuteQuerySegmentedAsync(rangeQuery, continuationToken);
+
+                // Assign the new continuation token to tell the service where to
+                // continue on the next iteration (or null if it has reached the end).
+                continuationToken = tableQueryResult.ContinuationToken;
+
+                allTenants.AddRange(tableQueryResult.Results);
+
+                // Loop until a null continuation token is received, indicating the end of the table.
+            } while (continuationToken != null);
+
+            return allTenants;
         }
 
         public async Task<bool> AddUserTenant(string userEmail, string tenantId)
@@ -53,38 +69,25 @@ namespace CloudMockApi.Library.Services.Storage
             try
             {
                 var result = await tenantsTable.ExecuteAsync(insertOperation);
-                if (result.HttpStatusCode != (int) HttpStatusCode.NoContent)
+                if (result.HttpStatusCode == (int) HttpStatusCode.NoContent)
                 {
-                    return false;
+                    return true;
                 }
             }
             catch (Exception e)
             {
                 Trace.TraceError($"Error while inserting new tenant: {e}");
-                return false;
             }
-
-            try
-            {
-                var userTenant = new UserTenant(tenantId, userEmail);
-
-                var userTenantInsertOperation = TableOperation.Insert(userTenant);
-                var result = await userTenantsTable.ExecuteAsync(userTenantInsertOperation);
-                return result.HttpStatusCode == (int)HttpStatusCode.NoContent;
-            }
-            catch (Exception e)
-            {
-                Trace.TraceError($"Error while inserting new user tenant: {e}");
-                return false;
-            }
+            return false;
         }
 
-        public Task<Tenant> FindTenantByTenantId(string tenantId)
+        public async Task<Tenant> FindTenantByTenantId(string tenantId)
         {
-            var emailToLower = tenantId.ToLowerInvariant();
-            // Query across partition keys
+            var retrieveOperation = TableOperation.Retrieve<Tenant>(GlobalConstants.TenantPartitionKey, tenantId.ToLowerInvariant());
 
-            return Task.FromResult<Tenant>(null);
+            var retrievedResult = await this.tenantsTable.ExecuteAsync(retrieveOperation);
+
+            return (Tenant) retrievedResult.Result;
         }
     }
 
