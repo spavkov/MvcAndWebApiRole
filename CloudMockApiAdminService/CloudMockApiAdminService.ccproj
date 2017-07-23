@@ -5,14 +5,13 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>2.9</ProductVersion>
-    <ProjectGuid>55ed8d7a-8bc7-47c3-acd9-d4b3bfba694a</ProjectGuid>
+    <ProjectGuid>2695e6ce-fd4a-441a-ac4d-caee767a657f</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CloudMockApi</RootNamespace>
-    <AssemblyName>CloudMockApi</AssemblyName>
+    <RootNamespace>CloudMockApiAdminService</RootNamespace>
+    <AssemblyName>CloudMockApiAdminService</AssemblyName>
     <StartDevelopmentStorage>True</StartDevelopmentStorage>
-    <Name>CloudMockApiService</Name>
-    <PackageEnableRemoteDebugger>False</PackageEnableRemoteDebugger>
+    <Name>CloudMockApiAdminService</Name>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -38,20 +37,20 @@
     <ServiceConfiguration Include="ServiceConfiguration.Cloud.cscfg" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CloudMockApi\CloudMockApi.csproj">
-      <Name>CloudMockApi</Name>
-      <Project>{3a1afcaa-eb41-4633-b8c4-ff3e368bc344}</Project>
+    <ProjectReference Include="..\CloudMockApi.Admin\CloudMockApi.Admin.csproj">
+      <Name>CloudMockApi.Admin</Name>
+      <Project>{2f64b091-f3c2-4b98-89c8-fe06d524daee}</Project>
       <Private>True</Private>
       <RoleType>Web</RoleType>
-      <RoleName>CloudMockApi</RoleName>
+      <RoleName>CloudMockApi.Admin</RoleName>
       <UpdateDiagnosticsConnectionStringOnPublish>True</UpdateDiagnosticsConnectionStringOnPublish>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="CloudMockApiContent\" />
+    <Folder Include="CloudMockApi.AdminContent\" />
   </ItemGroup>
   <ItemGroup>
-    <DiagnosticsConfiguration Include="CloudMockApiContent\diagnostics.wadcfgx" />
+    <DiagnosticsConfiguration Include="CloudMockApi.AdminContent\diagnostics.wadcfgx" />
   </ItemGroup>
   <!-- Import the target files for this project template -->
   <PropertyGroup>
